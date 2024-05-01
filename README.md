@@ -24,13 +24,17 @@ Documentation can currently be found on this Github repo's wiki: https://github.
 6. [visualize_BGC-ome - quick and simple visualization of a sample's BGC-ome](https://github.com/Kalan-Lab/lsaBGC/wiki/19.-Plot-Sample-BGC-ome)
 7. [***new***: Investigate a single cluster of related BGCs using the sibling suite *zol*](https://github.com/Kalan-Lab/zol)
 
+## IMPORTANT: PLEASE USE v1.52+:
+
+Please make sure to use v1.52+ of the pipeline - if you are using `lsaBGC-Easy.py` with antiSMASH, the default settings for antiSMASH based BGC prediction from v1.38 to v1.51 included the argument `--taxon fungi` by mistake. It should only be the default for the analagous `lsaBGC-Euk-Easy.py` program. 
+
 ## Installation:
 
 ### Using Conda (for full usage of suite)
 
 Installation can be performed via conda (see below for Docker) and should take ~5 minutes with mamba or ~10-20 minutes with conda and has been tested on both unix (specifically Ubuntu) and macOS. We are happy to attempt to address issues with installation if any arise, please open a Git Issues case:
 
-```
+```bash
 # 1. clone Git repo and cd into it!
 git clone https://github.com/Kalan-Lab/lsaBGC
 cd lsaBGC/
@@ -39,18 +43,20 @@ cd lsaBGC/
 # For a much faster installation replace "conda" in the following
 # commands with "mamba" (after installing mamba in your base conda
 # environment)
-conda env create -f lsaBGC_env.yml -p /path/to/lsaBGC_conda_env/
+mamba env create -f lsaBGC_env.yml -p /path/to/lsaBGC_conda_env/
 conda activate /path/to/lsaBGC_conda_env/
 
 # 3. complete python installation with the following commands:
-# since version 1.38, setup.py includes code for pip install of sonicparanoid
+# since version 1.50, setup.py sonicparanoid no longer included
+# via pip based installation - to use SonicParanoid, please use
+# Docker - might incorporate as a conda installation in the future.
 python setup.py install
 pip install -e .
 ```
 
 Optional, but recommended, command to download KOfams + PGAP HMMs + MIBiG protein FASTA for annotation:
 
-```
+```bash
 # Warning: can take >10 minutes! 
 # Can skip to run tests first to make sure things are working properly.
 # within lsaBGC Git repo with conda environment activated:
@@ -65,7 +71,7 @@ setup_bigscape.py
    
 A small test case is provided here and can be run after installation by simply issuing (takes around ~7 minutes using 4 cpus/threads):
 
-```
+```bash
 # Warning: uses 4 cpus/threads! 
 bash run_tests.sh
 ```
@@ -76,11 +82,11 @@ The major outputs of the final `lsaBGC-AutoAnalyze.py` run are in the resulting 
    
 ### Using Docker (for major workflows only)
 
-A docker image is provided for the `lsaBGC-Easy.py` and `lsaBGC-Euk-Easy.py` workflows together with a wrapper script. The image is pretty large (~21Gb without SonicParanoid, ~32Gb with SonicParanoid) but includes all the databases and dependencies needed for lsaBGC, BiG-SCAPE, antiSMASH, and GECCO analysis. For lsaBGC, to save space, the KOfam database is not included. For antiSMASH, MEME is not incldued, thus RODEO and CASSIS analyses are not available.
+A docker image is provided for the `lsaBGC-Easy.py` and `lsaBGC-Euk-Easy.py` workflows together with a wrapper script. The image is pretty large (~25Gb without SonicParanoid, ~33Gb with SonicParanoid) but includes all the databases and dependencies needed for lsaBGC, BiG-SCAPE, antiSMASH, and GECCO analysis. For lsaBGC, to save space, the KOfam database is not included. For antiSMASH, MEME is not incldued, thus RODEO and CASSIS analyses are not available.
    
 To use the latest Docker image, please: (1) install Docker and (2) download the wrapper script:
 
-```
+```bash
 # 1. download wrapper script for running image with SonicParanoid
 wget https://raw.githubusercontent.com/Kalan-Lab/lsaBGC/main/docker/withSonicParanoid/run_LSABGC.sh
 

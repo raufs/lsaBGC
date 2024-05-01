@@ -3,7 +3,7 @@ import sys
 from setuptools import setup
 
 setup(name='lsaBGC',
-      version='1.39',
+      version='1.52',
       description='Suite for comparative genomic, population genetics and evolutionary analysis, as well as metagenomic mining of micro-evolutionary novelty in BGCs all in the context of a single lineage of interest.',
       url='http://github.com/Kalan-Lab/lsaBGC/',
       author='Rauf Salamzade',
@@ -20,6 +20,7 @@ setup(name='lsaBGC',
                'scripts/runProdigalAndMakeProperGenbank.py',
                'scripts/visualize_BGC-Ome.py',
                'scripts/processAndReformatNCBIGenbanks.py',
+               'scripts/genbankToProkkaGFF.py',
                'scripts/simpleProteinExtraction.py',
                'scripts/createPickleOfSampleAnnotationListingFile.py',
                'scripts/popSizeAndSampleSelector.py',
@@ -46,7 +47,7 @@ try:
       os.system('sonicparanoid-get-test-data -o .')
       os.system('sonicparanoid -i sonicparanoid_test/test_input -o sonicparanoid_test/test_output -p my_first_run')
       os.system('rm -rf sonicparanoid_test/')
+      os.system('pip install -q --force-reinstall -v "setuptools==58.2.0" 2> /dev/null')
 except:
       sys.stderr.write('Warning: unable to install sonicparanoid!\n')
       sys.exit(1)
-
